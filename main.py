@@ -1,39 +1,32 @@
 import pandas as pd
 
-platformdict = {
-    'Wii': 1,
-    'NES': 2,
-    'GB': 3,
-    'DS': 4,
-    'X360': 5,
-    'PS3': 6,
-    'PS2': 7,
-    'SNES': 8,
-    'GBA': 9,
-    'PS4': 10,
-    '3DS': 11,
-    'N64': 12,
-    'PS': 13,
-    'XB': 14,
-    'PC': 15,
-    '2600': 16,
-    'PSP': 17,
-    'XOne': 18,
-    'WiiU': 19,
-    'GC': 20,
-    'GEN': 21,
-    'DC': 22,
-    'PSV': 23,
-    'SAT': 24,
-    'SCD': 25,
-    'WS': 26,
-    'NG': 27,
-    'TG16': 28,
-    '3DO': 29,
-    'GG': 30,
-    'PCFX': 31
-}
+def column_change(df, col_name):
+    # makes a list of unique values from column
+    unique_vals = df[col_name].unique()
+    print(unique_vals)
+
+    # list to hold dictionary values
+    nums = []
+
+    # append the nums from 0 to the length of unique vals
+    for x in range(len(unique_vals)):
+        nums.append(x)
+
+    # makes dictionary from values
+    # 'Wii': 1, 'PS5': 2....
+    diction = dict(zip(unique_vals, nums))
+    print(diction)
+
+    # replace in value in specified column with the mathcing value
+    df.replace({col_name: diction}, inplace=True)
+    return df
+
+
 df = pd.read_csv('/Users/kevinbanze/Desktop/Video_Games_Sales_as_at_22_Dec_2016 2.csv')
 
-df.replace({'Platform': platformdict}, inplace = True)
-print(df['Platform'])
+column_change(df, 'Platform')
+column_change(df, 'Genre')
+column_change(df, 'Publisher')
+column_change(df, 'Developer')
+column_change(df, 'Rating')
+print(df)
